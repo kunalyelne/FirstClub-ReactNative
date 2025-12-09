@@ -2,6 +2,11 @@
 
 A React Native health dashboard application built with Clean Architecture and MVVM patterns.
 
+## 📸 Screenshots
+
+![App Screenshot](screenshots/app-screenshot.png)
+
+
 ## 🚀 Quick Start
 
 ### Prerequisites
