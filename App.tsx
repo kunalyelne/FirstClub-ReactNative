@@ -10,16 +10,19 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {ErrorBoundary} from './src/presentation/components/common/ErrorBoundary';
 import {HomeView} from './src/presentation/screens/Home';
+import {ServiceProvider} from './src/core/di';
 
 const App: React.FC = () => {
   return (
     <ErrorBoundary>
-      <GestureHandlerRootView style={styles.container}>
-        <SafeAreaProvider>
-          <StatusBar style="light" />
-          <HomeView />
-        </SafeAreaProvider>
-      </GestureHandlerRootView>
+      <ServiceProvider>
+        <GestureHandlerRootView style={styles.container}>
+          <SafeAreaProvider>
+            <StatusBar style="light" />
+            <HomeView />
+          </SafeAreaProvider>
+        </GestureHandlerRootView>
+      </ServiceProvider>
     </ErrorBoundary>
   );
 };

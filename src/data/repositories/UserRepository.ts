@@ -3,6 +3,7 @@
  * Manages user profile data with offline-first caching
  */
 
+import {injectable} from 'inversify';
 import {User} from '../../domain/entities/User';
 import {Result, success, failure} from '../../types/Result';
 import {AppError} from '../../types/errors';
@@ -12,6 +13,7 @@ import {StorageError} from '../../types/errors';
 
 const STORAGE_KEY = '@fitlane:user_profile';
 
+@injectable()
 export class UserRepository implements IUserRepository {
   async getUserProfile(): Promise<Result<User, AppError>> {
     try {

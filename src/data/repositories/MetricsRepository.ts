@@ -3,19 +3,22 @@
  * Implements offline-first strategy: local cache → remote fetch → cache update
  */
 
+import {injectable, inject} from 'inversify';
 import type {DailyMetrics} from '../../domain/entities/DailyMetrics';
 import {Result, success, failure} from '../../types/Result';
 import {AppError} from '../../types/errors';
 import {IMetricsRepository} from '../../domain/repositories/IMetricsRepository';
 import {IMetricsLocalDataSource} from '../../domain/datasources/ILocalDataSource';
 import {IMetricsRemoteDataSource} from '../../domain/datasources/IRemoteDataSource';
-import {MetricsLocalDataSource} from '../sources/MetricsLocalDataSource';
-import {MetricsRemoteDataSource} from '../network/datasources/MetricsRemoteDataSource';
+import {TYPES} from '../../core/di/Types';
 
+@injectable()
 export class MetricsRepository implements IMetricsRepository {
   constructor(
-    private localDataSource: IMetricsLocalDataSource = new MetricsLocalDataSource(),
-    private remoteDataSource: IMetricsRemoteDataSource = new MetricsRemoteDataSource(),
+    @inject(TYPES.IMetricsLocalDataSource)
+    private localDataSource: IMetricsLocalDataSource,
+    @inject(TYPES.IMetricsRemoteDataSource)
+    private remoteDataSource: IMetricsRemoteDataSource,
   ) {}
 
   async getTodayMetrics(): Promise<Result<DailyMetrics, AppError>> {

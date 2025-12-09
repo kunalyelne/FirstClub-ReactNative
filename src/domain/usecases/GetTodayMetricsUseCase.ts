@@ -3,13 +3,19 @@
  * Fetches and validates today's health metrics
  */
 
+import {injectable, inject} from 'inversify';
 import {DailyMetrics, DailyMetricsEntity} from '../entities/DailyMetrics';
 import {IMetricsRepository} from '../repositories/IMetricsRepository';
 import {Result} from '../../types/Result';
 import {AppError, ValidationError} from '../../types/errors';
+import {TYPES} from '../../core/di/Types';
 
+@injectable()
 export class GetTodayMetricsUseCase {
-  constructor(private metricsRepository: IMetricsRepository) {}
+  constructor(
+    @inject(TYPES.IMetricsRepository)
+    private metricsRepository: IMetricsRepository,
+  ) {}
 
   async execute(): Promise<Result<DailyMetrics, AppError>> {
     const result = await this.metricsRepository.getTodayMetrics();

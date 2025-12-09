@@ -3,13 +3,19 @@
  * Fetches and validates user profile data
  */
 
+import {injectable, inject} from 'inversify';
 import {User, UserEntity} from '../entities/User';
 import {IUserRepository} from '../repositories/IUserRepository';
 import {Result} from '../../types/Result';
 import {AppError, ValidationError} from '../../types/errors';
+import {TYPES} from '../../core/di/Types';
 
+@injectable()
 export class GetUserProfileUseCase {
-  constructor(private userRepository: IUserRepository) {}
+  constructor(
+    @inject(TYPES.IUserRepository)
+    private userRepository: IUserRepository,
+  ) {}
 
   async execute(): Promise<Result<User, AppError>> {
     const result = await this.userRepository.getUserProfile();

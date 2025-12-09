@@ -3,13 +3,19 @@
  * Updates a health metric value with validation
  */
 
+import {injectable, inject} from 'inversify';
 import {DailyMetrics, DailyMetricsEntity} from '../entities/DailyMetrics';
 import {IMetricsRepository} from '../repositories/IMetricsRepository';
 import {Result} from '../../types/Result';
 import {AppError, ValidationError} from '../../types/errors';
+import {TYPES} from '../../core/di/Types';
 
+@injectable()
 export class UpdateMetricUseCase {
-  constructor(private metricsRepository: IMetricsRepository) {}
+  constructor(
+    @inject(TYPES.IMetricsRepository)
+    private metricsRepository: IMetricsRepository,
+  ) {}
 
   async execute(
     metricType: keyof DailyMetrics,

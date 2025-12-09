@@ -14,14 +14,6 @@ import {
 import {DailyMetrics} from '../../../domain/entities/DailyMetrics';
 import {User} from '../../../domain/entities/User';
 import {
-  GetTodayMetricsUseCase,
-  UpdateMetricUseCase,
-  RefreshMetricsUseCase,
-} from '../../../domain/usecases';
-import {GetUserProfileUseCase} from '../../../domain/usecases';
-import {MetricsRepository} from '../../../data/repositories/MetricsRepository';
-import {UserRepository} from '../../../data/repositories/UserRepository';
-import {
   quickActionsService,
   suggestionsService,
   activitiesService,
@@ -30,6 +22,7 @@ import {
 import {convertToHealthMetrics} from '../../../presentation/mappers/HealthMetricMapper';
 import {getGreeting} from '../../../utils/greeting';
 import {getMotivationalText} from '../../../utils/motivation';
+import {useServices} from '../../../core/di';
 
 /**
  * ViewModel state interface
@@ -74,22 +67,18 @@ interface UseHomeViewModelReturn extends HomeViewModelState {
  * Manages state and coordinates use cases for the dashboard
  */
 export const useHomeViewModel = (): UseHomeViewModelReturn => {
+  // Get services from DI container
+  const services = useServices();
+
   // Memoize use cases to ensure stable references for useCallback dependencies
   const useCases = useMemo(() => {
-    try {
-      const metricsRepository = new MetricsRepository();
-      const userRepository = new UserRepository();
-      return {
-        getTodayMetricsUseCase: new GetTodayMetricsUseCase(metricsRepository),
-        updateMetricUseCase: new UpdateMetricUseCase(metricsRepository),
-        refreshMetricsUseCase: new RefreshMetricsUseCase(metricsRepository),
-        getUserProfileUseCase: new GetUserProfileUseCase(userRepository),
-      };
-    } catch (error) {
-      console.error('Error initializing ViewModel:', error);
-      throw error;
-    }
-  }, []);
+    return {
+      getTodayMetricsUseCase: services.getGetTodayMetricsUseCase(),
+      updateMetricUseCase: services.getUpdateMetricUseCase(),
+      refreshMetricsUseCase: services.getRefreshMetricsUseCase(),
+      getUserProfileUseCase: services.getGetUserProfileUseCase(),
+    };
+  }, [services]);
 
   const {
     getTodayMetricsUseCase,
@@ -291,9 +280,9 @@ export const useHomeViewModel = (): UseHomeViewModelReturn => {
     }
   }, [updateMetric]);
 
-  // Handle smart suggestion interactions
   const handleSuggestion = useCallback((suggestion: SmartSuggestion) => {
-    // TODO: Navigate to relevant screen or trigger action
+    // Handle suggestion tap - can be extended to navigate or trigger actions
+    console.log('Suggestion tapped:', suggestion);
   }, []);
 
   // Clear error state

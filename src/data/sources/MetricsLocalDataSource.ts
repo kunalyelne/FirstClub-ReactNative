@@ -4,6 +4,7 @@
  * Follows Single Responsibility Principle - only handles local persistence
  */
 
+import {injectable} from 'inversify';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type {DailyMetrics} from '../../domain/entities/DailyMetrics';
 import {Result, success, failure} from '../../types/Result';
@@ -16,6 +17,7 @@ const STORAGE_KEY = '@fitlane:daily_metrics';
  * Local data source implementation for metrics
  * Handles AsyncStorage operations with proper error handling
  */
+@injectable()
 export class MetricsLocalDataSource implements IMetricsLocalDataSource {
   async getTodayMetrics(): Promise<Result<DailyMetrics | null, StorageError>> {
     try {
