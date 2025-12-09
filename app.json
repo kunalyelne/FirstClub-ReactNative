@@ -1,0 +1,26 @@
+{
+  "name": "FitlaneRN",
+  "main": "index.js",
+  "expo": {
+    "name": "Fitlane",
+    "slug": "fitlane-rn",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "backgroundColor": "#000000",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fitlane.rn"
+    },
+    "android": {
+      "package": "com.fitlane.rn",
+      "adaptiveIcon": {
+        "backgroundColor": "#000000"
+      }
+    },
+    "web": {}
+  }
+}
