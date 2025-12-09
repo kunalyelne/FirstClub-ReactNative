@@ -4,7 +4,7 @@ A React Native health dashboard application built with Clean Architecture and MV
 
 ## 📸 Screenshots
 
-![App Screenshot](screenshots/app-screenshot.png)
+<img src="screenshots/app-screenshot.png" alt="App Screenshot" width="300">
 
 
 ## 🚀 Quick Start
